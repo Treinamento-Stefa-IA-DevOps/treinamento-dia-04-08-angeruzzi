@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    environment:
+      DB_NAME: teste
+      DB_PASS: password123
+      DB_USER: userino
+    ports:
+      - 5000:5000
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: teste
+      POSTGRES_PASSWORD: password123
+      POSTGRES_USER: userino
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
